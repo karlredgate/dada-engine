@@ -79,14 +79,19 @@ static inline char *exec_instr(pInstr s)
     case PUSHV:
     {
 	struct var *v=var_lookup(vars, s->operand.contents.s);
-	switch(v->type) {
-	case string_t:
-	    push_str(v->value.s);
-	    break;
-	case int_t:	
-	    push_int(v->value.i);
-	    break;
-	};
+        if ( v == 0 ) {
+	    fprintf(stderr, "attempted to use unknown variable \"%s\" in expression.\n", s->operand.contents.s);
+            push_str( "(NULL)" );
+        } else {
+	  switch(v->type) {
+	  case string_t:
+	      push_str( strdup(v->value.s) );
+	      break;
+	  case int_t:	
+	      push_int(v->value.i);
+	      break;
+	  };
+	}
     }
 	    break;
     case INVOKE:
@@ -205,3 +210,7 @@ void dump_code(pInstr s)
 	s=s->next;
     };
 };
+
+/*
+ * vim:autoindent
+ */

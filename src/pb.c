@@ -3,7 +3,9 @@
  * before 11-7-1995, this was in parser.y
  */
 
+#include <sys/time.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include "rtn.h"
 #include "check.h"
@@ -54,6 +56,15 @@ int strtoseed(char *s)
     return r;
 };
 
+void initrandom( int seed ) {
+    struct timeval tv;
+    gettimeofday( &tv, NULL );
+    if ( seed == 0 ) {
+        seed = tv.tv_usec;
+    }
+    srandom(seed);
+}
+
 main(int argc, char *argv[])
 {
   int i;
@@ -83,6 +94,7 @@ main(int argc, char *argv[])
       case 'y': yydebug=1; break;
       };
   };
-  srandom(rseed?strtoseed(rseed):time(NULL));
+  /* srandom(rseed?strtoseed(rseed):time(NULL)); */
+  initrandom(rseed?strtoseed(rseed):0);
   yyparse();
 };

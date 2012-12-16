@@ -2,6 +2,7 @@
  * mapping support for pb
  */
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -144,6 +145,10 @@ char *apply_mapping(char *input, pMapping m)
 {
   pMapOpt option;
 
+  if ( input == 0 ) {
+      fprintf( stderr, "apply_mapping: passed NULL input\n" );
+      exit( EINVAL );
+  }
   if(!m) return input;
 
   option = mapopt_match(m->options, input);

@@ -18,12 +18,14 @@ static inline struct var *new_str_var(char *name, char *val) {
   struct var *v = (struct var *)malloc(sizeof(struct var));
   v->name = name; v->type = string_t; v->value.s = val; 
   v->left = v->right = NULL;
+  return v;
 };
 
 static inline struct var *new_int_var(char *name, int val) {
   struct var *v = (struct var *)malloc(sizeof(struct var));
   v->name = name; v->type = int_t; v->value.i = val; 
   v->left = v->right = NULL;
+  return v;
 };
 
 static struct var *var_insert_str(struct var *tree, char *name, char *val)
