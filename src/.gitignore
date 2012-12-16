@@ -1,0 +1,8 @@
+*.o
+Makefile
+lex.yy.c
+libpb.a
+y.output
+y.tab.c
+y.tab.h
+pb
