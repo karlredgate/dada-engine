@@ -19,14 +19,14 @@
 
 #define DIE(str) { fprintf(stderr, "%s: %s\n", argv[0], str); exit(1); }
 
-void usage(char *whoami)
-{
+void
+usage(char *whoami) {
     fprintf(stderr, "usage: %s [options] file [file ....]\n", whoami);
     exit(1);
-};
+}
 
-main(int argc, char *argv[])
-{
+int
+main( int argc, char *argv[] ) {
     int i;
     char **cppargv, **pbargv;
     int cppargc, pbargc;
@@ -44,8 +44,8 @@ main(int argc, char *argv[])
     pbargc = 1;
     
     /* parse arguments */
-    for(i=1; argv[i][0]=='-'; i++) {
-	switch(argv[i][1]) {
+    for ( i = 1 ; argv[i][0] == '-' ; i++ ) {
+	switch ( argv[i][1] ) {
 	case 'D': /* preprocessor definition */
 	    cppargv[cppargc++] = argv[i];
 	    break;
@@ -58,33 +58,34 @@ main(int argc, char *argv[])
 	    break;
 	case '-': goto endflags; /* the following data is a sequence of 
 				    filenames */
-	};
-    };
-  endflags:
-    if(i>=argc) usage(argv[0]);
-    for(;i<argc-1;i++) {
+	}
+    }
+endflags:
+    if ( i >= argc ) usage(argv[0]);
+    for( ; i < argc - 1 ; i++ ) {
 	cppargv[cppargc++] = "-include";
 	cppargv[cppargc++] = argv[i];
-    };
+    }
     cppargv[cppargc++] = argv[i];
     cppargv[cppargc++] = "-";
     cppargv[cppargc++] = NULL;
 
     /* execute the commands */
 
-    if(pipe(pipefd)==-1) DIE("cannot create pipe.");
+    if ( pipe(pipefd) == -1 ) DIE("cannot create pipe.");
 
-    if((pbpid = fork()) == 0) {
-	close(0); dup(pipefd[0]); /* connect this process to the pipe */
+    if ( (pbpid = fork()) == 0 ) {
+	close(0);
+	dup(pipefd[0]); /* connect this process to the pipe */
 	close(pipefd[0]);
 	execvp(PB_ENGINE, pbargv);
 /*	execvp("/bin/cat", pbargv);*/
 	DIE("cannot execvp " PB_ENGINE);
-    } else if (pbpid==-1)
-	DIE("cannot fork.");
+    } else if (pbpid==-1) DIE("cannot fork.");
 
-    if((cpppid = fork()) == 0) {
-	close(1); dup(pipefd[1]); /* connect this process to the pipe */
+    if ( (cpppid = fork()) == 0 ) {
+	close(1);
+	dup(pipefd[1]); /* connect this process to the pipe */
 	close(pipefd[1]);
 	execvp(PREPROCESSOR, cppargv);
 	/* You stay out of this; you're dead. */
@@ -93,7 +94,8 @@ main(int argc, char *argv[])
     } else if (cpppid==-1) {
 	kill(pbpid, SIGHUP);
 	DIE("cannot fork.");
-    };
+    }
+
     close(pipefd[0]);
     close(pipefd[1]);
 
@@ -102,4 +104,4 @@ main(int argc, char *argv[])
     fprintf(stderr, "wait() returned\n");
     wait(NULL);
     exit(0);
-};
+}
