@@ -20,19 +20,19 @@ typedef enum { mu, int_t, string_t } type_t;
 extern struct var *vars;
 
 struct var {
-  type_t type;
-  char *name;
-  union {
-    char *s;
-    int i;
-  } value;
-  struct var *left, *right;
+    type_t type;
+    char *name;
+    union {
+	char *s;
+	int i;
+    } value;
+    struct var *left, *right;
 };
 
 /* global function prototypes */
 
 struct var *var_lookup(struct var *tree, char *key);
-char *var_fetch(char *var_name); /* return NULL if not found */
+char *var_fetch(char *var_name);	/* return NULL if not found */
 int var_fetch_int(char *var_name);
 void var_put(char *var_name, char *value);
 void var_put_int(char *var_name, int value);

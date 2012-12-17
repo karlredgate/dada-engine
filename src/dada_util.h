@@ -12,6 +12,6 @@
  */
 
 
-void print_wrapped(FILE *f, char *s, int cols);
+void print_wrapped(FILE * f, char *s, int cols);
 
 #endif

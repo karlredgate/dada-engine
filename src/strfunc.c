@@ -12,13 +12,14 @@
 
 /* allocate a new string containing the first l characters of s */
 char *
-strnnew( char *s, int l ) {
-    int actl; /* actual length */
+strnnew(char *s, int l) {
+    int actl;			/* actual length */
     char *result;
-    if ( !s ) return NULL;
-    actl = min( strlen(s), l );
-    result = (char *) malloc(actl+1);
-    strncpy( result, s, actl ); 
+    if (!s)
+	return NULL;
+    actl = min(strlen(s), l);
+    result = (char *) malloc(actl + 1);
+    strncpy(result, s, actl);
     result[actl] = 0;
     return result;
 }
@@ -32,18 +33,21 @@ strdup(char *s) {
 
 /* concat() allocates a new string and strcat()s two strings together into it.  */
 char *
-concat( char *foo, char *bar ) {
+concat(char *foo, char *bar) {
     char *r;
 
-    if ( !foo && !bar ) return NULL;
-    if ( !foo ) return strnnew(bar, strlen(bar));
-    if ( !bar ) return strnnew(foo, strlen(foo));
-    r = (char *) malloc( strlen(foo) + strlen(bar) + 1 );
+    if (!foo && !bar)
+	return NULL;
+    if (!foo)
+	return strnnew(bar, strlen(bar));
+    if (!bar)
+	return strnnew(foo, strlen(foo));
+    r = (char *) malloc(strlen(foo) + strlen(bar) + 1);
 
-    if ( r ) {
-        strcpy(r, foo);
-        strcat(r, bar);
-        r[strlen(foo)+strlen(bar)] = '\0';
+    if (r) {
+	strcpy(r, foo);
+	strcat(r, bar);
+	r[strlen(foo) + strlen(bar)] = '\0';
     }
 
     return r;
@@ -54,30 +58,45 @@ concat( char *foo, char *bar ) {
    length of the string, it is safe to do in situ. */
 
 int
-cookstr( char *str ) {
+cookstr(char *str) {
     char *from = str, *to = str;
-    while ( *from ) {
-        if ( (*from) == '\\' ) {
-            from++;
-            if ( *from ) {
-	        switch ( *from ) {
-	        case 'n': *(to++) = '\n'; break;
-	        case 't': *(to++) = '\t'; break;
-	        case 'v': *(to++) = '\v'; break;
-	        case 'b': *(to++) = '\b'; break;
-	        case 'r': *(to++) = '\r'; break;
-	        case 'f': *(to++) = '\f'; break;
-	        case 'a': *(to++) = '\a'; break;
-	        default: *(to++)=*(from);
-	        }
-	        from++;
-            }
-        } else {
-            *(to++)=*(from++);
-        }
+    while (*from) {
+	if ((*from) == '\\') {
+	    from++;
+	    if (*from) {
+		switch (*from) {
+		case 'n':
+		    *(to++) = '\n';
+		    break;
+		case 't':
+		    *(to++) = '\t';
+		    break;
+		case 'v':
+		    *(to++) = '\v';
+		    break;
+		case 'b':
+		    *(to++) = '\b';
+		    break;
+		case 'r':
+		    *(to++) = '\r';
+		    break;
+		case 'f':
+		    *(to++) = '\f';
+		    break;
+		case 'a':
+		    *(to++) = '\a';
+		    break;
+		default:
+		    *(to++) = *(from);
+		}
+		from++;
+	    }
+	} else {
+	    *(to++) = *(from++);
+	}
     }
-    *to='\0';
-    return to-from;
+    *to = '\0';
+    return to - from;
 }
 
 /* itoa() formats an integer into a string, allocated on the heap */

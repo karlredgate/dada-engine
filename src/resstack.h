@@ -7,7 +7,6 @@
 #define __RESSTACK_H
 
 void resstack_push_new();
-
 void resstack_pop();
 
 #endif

@@ -11,22 +11,17 @@ typedef struct dictnode {
     struct dictnode *left, *right;
 } *Dict, **pDict;
 
-typedef int (*traverse_fn)(void *data, void *aux);
-
+typedef int (*traverse_fn) (void *data, void *aux);
 
 void dict_def(pDict d, char *k, void *value);
-
 void *dict_get(Dict d, char *k);
-
 void dict_inorder_traverse(Dict d, traverse_fn fn, void *aux);
-
 void dict_preorder_traverse(Dict d, traverse_fn fn, void *aux);
-
 int dict_size(Dict d);
-
 void dict_free(Dict d);
 
-/* dictionaries have an implicit order; therefore, it makes sense to get the
+/*
+ * dictionaries have an implicit order; therefore, it makes sense to get the
  * nth element of a dictionary. Ordinal numbers are related to the infix
  * order.
  */

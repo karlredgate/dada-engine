@@ -14,11 +14,11 @@
    reentrant some day... */
 
 struct state {
-    FILE* of;         /* output file */
-    int temp_count;   /* number of next temporary function */
+    FILE *of;			/* output file */
+    int temp_count;		/* number of next temporary function */
 };
 
-const char* c_prefix="dd";
+const char *c_prefix = "dd";
 
 /************************************************************************* 
  *
@@ -29,17 +29,19 @@ const char* c_prefix="dd";
 /* format a string, appending it to a buffer and returning the
  * new value of the buffer; the old one is freed. */
 
-static char* append(char *prev, char* fmt, ...)
-{
+static char *
+append(char *prev, char *fmt, ...) {
     char buffer[1024];
     va_list args;
     char *r;
 
     va_start(prev, fmt);
     vsprintf(buffer, fmt, args);
-    r=malloc((prev?strlen(prev):0)+strlen(buffer)+1);
-    strcpy(r,prev?prev:""); strcat(r,buffer);
-    if(prev)free(prev); 
+    r = malloc((prev ? strlen(prev) : 0) + strlen(buffer) + 1);
+    strcpy(r, prev ? prev : "");
+    strcat(r, buffer);
+    if (prev)
+	free(prev);
     va_end(prev);
     return r;
 }
@@ -47,8 +49,8 @@ static char* append(char *prev, char* fmt, ...)
 /* a standard deferred function, for lazy evaluation */
 
 
-void emit_prologue(FILE* f)
-{
+void
+emit_prologue(FILE * f) {
     fprintf(f, "/*  Dada Engine C runtime prologue;  acb  36 Chs 3162\
  * Freely distributable\n */\n\
 #include <stdio.h>\
@@ -68,40 +70,40 @@ dfunc %schoose(int num, ...)\
   return df;\
 }\
 \
-/*  end of prologue  */\n\n", 
-    c_prefix);
+/*  end of prologue  */\n\n", c_prefix);
 }
 
-static int c_rule_iterator(pRule r, aux_t l)
-{
-    int numopts=count_options(r->options);
-    struct state *st=(struct state *)l;
-    FILE* f=st->of;
-    char *func=NULL;   /* the buffer in which the function source is 
-			  built up */
+static int
+c_rule_iterator(pRule r, aux_t l) {
+    int numopts = count_options(r->options);
+    struct state *st = (struct state *) l;
+    FILE *f = st->of;
+    char *func = NULL;		/* the buffer in which the function source is 
+				   built up */
 
-    func=append(func, "char* %s_%s(", c_prefix, r->symbol);
+    func = append(func, "char* %s_%s(", c_prefix, r->symbol);
     /* FIXME: parameters here */
-    func=append(func, ")\n{\n");
-    if(numopts>2) {	
-	func=append(func, "  return %schoose(%d, ", c_prefix, numopts);
+    func = append(func, ")\n{\n");
+    if (numopts > 2) {
+	func = append(func, "  return %schoose(%d, ", c_prefix, numopts);
 	/* FIXME: enumerate options here */
 	/* we really need some sort of lazy evaluation mechanism */
-	func=append(func, "  );\n");
+	func = append(func, "  );\n");
     } else {
     }
-    func=append(func, "}\n\n");
+    func = append(func, "}\n\n");
     fprintf(f, "%s", func);
 }
 
-void emit_c(FILE *f, pRule rules, pMapping mappings, 
-	     pListNode transformations, char *start_sym)
-{
+void
+emit_c(FILE * f, pRule rules, pMapping mappings,
+       pListNode transformations, char *start_sym) {
     struct state st;
-    st.of=f;
-    st.temp_count=0;
+    st.of = f;
+    st.temp_count = 0;
 
     emit_prologue(f);
-    
-    rule_inorder_traverse(rules, (RuleIterator)&c_rule_iterator, (aux_t)&st);
+
+    rule_inorder_traverse(rules, (RuleIterator) & c_rule_iterator,
+			  (aux_t) & st);
 }

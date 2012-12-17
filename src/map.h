@@ -8,29 +8,29 @@
 /* an action performed on a string if it matches a key */
 
 enum mapmode {
-  replace,        /* completely replace the input string with another string */
-  subst           /* perform an ed-style regular expression substitution */
+    replace,			/* completely replace the input string with another string */
+    subst			/* perform an ed-style regular expression substitution */
 };
 
 typedef struct tagMapAction {
-  enum mapmode mode;
-  char *out; /* replacement/substitution text */
-  char *key; /* key for substitution; substring matching key is replaced.
-	        replacement is equivalent to substitution with key ".*" */
+    enum mapmode mode;
+    char *out;			/* replacement/substitution text */
+    char *key;			/* key for substitution; substring matching key is replaced.
+				   replacement is equivalent to substitution with key ".*" */
 } MapAction, *pMapAction;
 
 /* one option in a mapping */
 
 typedef struct tagMapOpt {
-  char *key; /* key (regular expression) to match input against */
-  pMapAction action;
-  struct tagMapOpt *next;
+    char *key;			/* key (regular expression) to match input against */
+    pMapAction action;
+    struct tagMapOpt *next;
 } MapOpt, *pMapOpt;
 
 typedef struct tagMapping {
-  char *name;
-  pMapOpt options;
-  struct tagMapping *next;
+    char *name;
+    pMapOpt options;
+    struct tagMapping *next;
 } Mapping, *pMapping;
 
 /*
@@ -70,4 +70,3 @@ pMapping map_lookup(pMapping list, char *name);
 char *apply_mapping(char *input, pMapping m);
 
 #endif
-
