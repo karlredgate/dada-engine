@@ -3,3 +3,5 @@ compiler:
   - gcc
 # Change this to your needs
 script: ./configure && make
+before_install:
+ - sudo apt-get install texinfo
