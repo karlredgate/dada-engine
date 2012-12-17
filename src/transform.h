@@ -6,6 +6,7 @@
 #define __TRANSFORM_H
 
 #include <stdlib.h>
+#include <string.h>
 #include "ptrlist.h"
 #include "config.h"
 #include <regex.h>		/* the POSIX.2 regular expression functions */

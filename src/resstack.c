@@ -3,6 +3,7 @@
  */
 
 #include <stdlib.h>
+#include <string.h>
 #include "limits.h"
 #include "dict.h"
 #include "ptrlist.h"
@@ -31,10 +32,15 @@ hist_set(res_history r, int bitpos) {
 struct hist_item {
     int num_opts;
     res_history hist;
-}
-/* the stack; each stack frame is a list node, whose car is a dictionary
+};
+
+/*
+ * the stack; each stack frame is a list node, whose car is a dictionary
  * of hist_item structures. (The car itself is a dictionary, not a pointer to
- * one.) */ pListNode res_stack = NULL;
+ * one.)
+ */
+
+pListNode res_stack = NULL;
 
 /* push a new stack frame */
 
