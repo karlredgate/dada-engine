@@ -86,4 +86,4 @@ ident           [A-Za-z_][A-Za-z0-9_\-]*
 /* GNU flex doesn't need a yywrap() to be defined; lex (at least the lex from
 DEC ULTRIX) does. */
 int yywrap() { return 1; }
-#endif/
+#endif
