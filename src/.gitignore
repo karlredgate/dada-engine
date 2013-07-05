@@ -1,5 +1,4 @@
 *.o
-Makefile
 lex.yy.c
 libpb.a
 y.output
