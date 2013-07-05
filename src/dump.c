@@ -6,12 +6,35 @@
 #include "rtn.h"
 #include "map.h"
 #include "transform.h"
+#include "machine.h"
 
 static int dump_atoms(pNode atoms);
 
-static int
+static void
 dump_node( pNode node ) {
     switch (node->type) {
+    case var_ref:
+        fprintf(stderr, "ERROR - dump_node unhandled type 'var_ref'\n" );
+        break;
+    case silence:
+        fprintf(stderr, "ERROR - dump_node unhandled type 'silence'\n" );
+        break;
+    case choice:
+        fprintf(stderr, "ERROR - dump_node unhandled type 'choice'\n" );
+        break;
+    case star:
+        fprintf(stderr, "ERROR - dump_node unhandled type 'star'\n" );
+        break;
+    case plus:
+        fprintf(stderr, "ERROR - dump_node unhandled type 'plus'\n" );
+        break;
+    case repeat_const:
+        fprintf(stderr, "ERROR - dump_node unhandled type 'repeat_const'\n" );
+        break;
+    case repeat_var:
+        fprintf(stderr, "ERROR - dump_node unhandled type 'repeat_var'\n" );
+        break;
+
     case literal:
 	printf("\"%s\"", node->data);
 	break;
@@ -43,7 +66,7 @@ dump_node( pNode node ) {
 	break;
     case code:
 	printf("code:");
-	dump_code(node->data);
+	dump_code( (pInstr)(node->data) );
 	break;
     }
 }
@@ -52,11 +75,13 @@ static int
 node_iterator( pNode node, int param ) {
     dump_node(node);
     printf(", ");
+    return 0;
 }
 
 static int
 dump_atoms( pNode atoms ) {
     node_map(atoms, (NodeIterator) & node_iterator, NULL);
+    return 0;
 }
 
 static int
@@ -64,6 +89,7 @@ option_iter( pOption opt, int param ) {
     printf("\t\t");
     dump_atoms(opt->atoms);
     printf("\n");
+    return 0;
 }
 
 static void
@@ -90,6 +116,7 @@ rule_iter( pRule r, int param ) {
     }
     printf(" : (%d options)\n", option_length(r->options));
     dump_options(r->options);
+    return 0;
 }
 
 void
@@ -142,6 +169,7 @@ dump_mappings( pMapping m ) {
 static int
 print_param_iter( char *param, void *foo ) {
     printf("/%s", param);
+    return 0;
 }
 
 static void
@@ -159,12 +187,14 @@ dump_transopt_iter( pTransOpt opt, void *beable ) {
     printf(" \"%s\" -> ", opt->key);
     dump_transcmd(opt->cmds);
     putchar('\n');
+    return 0;
 }
 
 static int
 dump_xform_iter( pTransformation xform, void *blah ) {
     printf("transformation: \"%s\"\n", xform->name);
     list_mapcar(xform->options, (ListIterator) dump_transopt_iter, NULL);
+    return 0;
 }
 
 void
