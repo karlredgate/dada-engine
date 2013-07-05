@@ -41,13 +41,17 @@ node_map( pNode list, NodeIterator iter, aux_t param ) {
 
 pOption
 option_cons( pNode car, pOption cdr ) {
-    pOption r;
+    pOption r = (pOption) malloc( sizeof(Option) );
 
-    if (r = (pOption) malloc(sizeof(Option))) {
-	r->atoms = car;
-	r->next = cdr;
-	r->randweight = 4;
+    if ( r == NULL ) {
+        fprintf( stderr, "option_cons: memory allocation failure\n" );
+        exit( -1 );
     }
+
+    r->atoms = car;
+    r->next = cdr;
+    r->randweight = 4;
+
     return r;
 }
 
@@ -80,52 +84,6 @@ option_nth( pOption list, int index ) {
     if ( index == 0    ) return list;
     return option_nth(list->next, index - 1);
 }
-
-#if 0
-pParam
-param_cons(char *car, pParam cdr) {
-    pParam r;
-
-    if (r = (pParam) malloc(sizeof(Param))) {
-	r->name = car;
-	r->next = cdr;
-    }
-    return r;
-}
-
-pParam
-param_append(pParam a, pParam b) {
-    pParam r = a;
-
-    while (r->next)
-	r = r->next;
-    r->next = b;
-    return a;
-}
-
-void
-param_free(pParam list) {
-    if (list) {
-	param_free(list->next);
-	free(list);
-    }
-}
-
-#endif
-
-/* return the index of a string in a parameter list, -1 if not present */
-
-#if 0
-static int
-_param_indexof(pParam list, char *nm, int futplex) {
-    if (!list)
-	return -1;
-    if (strcmp(nm, list->name) == 0)
-	return futplex;
-    else
-	return _param_indexof(list->next, nm, futplex + 1);
-}
-#endif
 
 static int
 param_indexof_iter( pListNode l, char *str ) {
