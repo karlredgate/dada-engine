@@ -96,6 +96,9 @@ var_fetch(char *var_name) {
     if (v) {
 	char *foo;
 	switch (v->type) {
+        case mu:
+            fprintf( stderr, "var_fetch: unhandled var type\n" );
+            exit( -1 );
 	case string_t:
 	    return v->value.s;
 	case int_t:
@@ -112,11 +115,12 @@ int
 var_fetch_int(char *var_name) {
     struct var *v = var_lookup(vars, var_name);
 
-    if (v) {
-	switch (v->type) {
-	case int_t:
-	    return v->value.i;
-	}
+    if ( v == NULL ) return 0;
+
+    switch ( v->type ) {
+    case    int_t: return v->value.i;
+    case string_t: return 0;
+    case       mu: return 0;
     }
 
     return 0;
@@ -131,3 +135,8 @@ void
 var_put_int(char *var_name, int value) {
     vars = var_insert_int(vars, var_name, value);
 }
+
+/*
+ * vim:autoindent
+ * vim:expandtab
+ */

@@ -12,6 +12,10 @@
 #include "map.h"
 #include "transform.h"
 #include "resolve.h"
+#include "dump.h"
+#include "dada_util.h"
+
+extern int yyparse(void);
 
 static char *start_symbol = NULL;	/* to override the default start symbol */
 pRule rule_base;
@@ -90,15 +94,15 @@ initrandom( int seed ) {
 int
 main( int argc, char **argv ) {
     int i;
-    char *p;
-
     char *rseed = NULL;		/* a random seed, in string form */
+    char *columns = getenv("COLUMNS");
 
     outfile = stdout;
 
     /* read environment variables as needed */
-    if (p = getenv("COLUMNS"))
-	wrapwidth = atoi(p);
+    if ( columns != NULL ) {
+	wrapwidth = atoi(columns);
+    }
 
     /* check command-line arguments */
 
@@ -141,4 +145,11 @@ main( int argc, char **argv ) {
     /* srandom(rseed?strtoseed(rseed):time(NULL)); */
     initrandom( rseed ? strtoseed(rseed) : 0 );
     yyparse();
+
+    return 0;
 }
+
+/*
+ * vim:autoindent
+ * vim:expandtab
+ */
