@@ -1,5 +1,6 @@
-RANLIB	= @RANLIB@
-CC	= @CC@
+# Generated automatically from Makefile.in by configure.
+RANLIB	= ranlib
+CC	= gcc
 
 CFLAGS=-DPOSIX_MISTAKE
 
