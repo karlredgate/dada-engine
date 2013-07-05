@@ -340,7 +340,7 @@ possible symbol names:
 
 A pb rule may contain blocks of embedded code. This code allows
 expressions to be evaluated and variables to be updated. 
-@xref{Embedded Code} for details.
+@xref{Embedded Code}, for details.
 
 A block of embedded code is enclosed by curly brackets.
 
