@@ -87,7 +87,7 @@ exec_instr( pInstr s ) {
 	    return tc->contents.s;
 	case int_t:
 	    sprintf(buffer, "%i", tc->contents.i);
-	    return strdup(buffer);
+	    return nstrdup(buffer);
 	}
     case PUSHV:
 	{
@@ -100,7 +100,7 @@ exec_instr( pInstr s ) {
 	    } else {
 		switch (v->type) {
 		case string_t:
-		    push_str(strdup(v->value.s));
+		    push_str(nstrdup(v->value.s));
 		    break;
 		case int_t:
 		    push_int(v->value.i);
@@ -125,7 +125,7 @@ exec_instr( pInstr s ) {
     case PUSH:
 	switch (s->operand.type) {
 	case string_t:
-	    push_str(strdup(s->operand.contents.s));
+	    push_str(nstrdup(s->operand.contents.s));
 	    break;
 	case int_t:
 	    push_int(s->operand.contents.i);

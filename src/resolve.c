@@ -8,6 +8,7 @@
 #include "rtn.h"
 #include "resolve.h"
 #include "dstring.h"
+#include "strfunc.h"
 #include "map.h"
 #include "transform.h"
 #include "variables.h"
@@ -54,14 +55,14 @@ resolve_atom(pNode atom, pRule rules, pListNode formal, pListNode cooked) {
 	       atom->type, atom->data);
     switch (atom->type) {
     case literal:
-	return strdup(atom->data);
+	return nstrdup(atom->data);
     case symbol:
 	/* first, check if this symbol is a parameter of the current rule */
 	if ((index = param_indexof(formal, atom->data)) != -1) {
 	    if (index >= list_length(cooked))
-		return (strdup("(parameter off end of list)"));
+		return (nstrdup("(parameter off end of list)"));
 	    else
-		return (strdup(list_nth(cooked, index)->data));
+		return (nstrdup(list_nth(cooked, index)->data));
 	}
 	/* it is not a parameter substitution; resolve from rules */
 	return _resolve_rule(rules, rule_find(rules, atom->data),
@@ -86,7 +87,7 @@ resolve_atom(pNode atom, pRule rules, pListNode formal, pListNode cooked) {
 		val = resolve_atom(atom->params, rules, formal, cooked);
 		var_put(atom->data, val);
 	    }
-	    val = strdup(val);	/* make a disposable copy of it */
+	    val = nstrdup(val);	/* make a disposable copy of it */
 	    return val;
 	}
     case var_def:{
@@ -94,7 +95,7 @@ resolve_atom(pNode atom, pRule rules, pListNode formal, pListNode cooked) {
 	    if (!val)
 		val = "undefined";
 	    var_put(atom->data, val);
-	    val = strdup(val);	/* make a disposable copy of it */
+	    val = nstrdup(val);	/* make a disposable copy of it */
 	    return val;
 	}
     case var_ref:{
@@ -103,7 +104,7 @@ resolve_atom(pNode atom, pRule rules, pListNode formal, pListNode cooked) {
 		fprintf(stderr, "undefined variable `%s'.\n", atom->data);
 		exit(1);
 	    }
-	    return strdup(val);	/* make a disposable copy of it */
+	    return nstrdup(val);	/* make a disposable copy of it */
 	}
     case silence:{
 	    free(resolve_atom(atom->params, rules, formal, cooked));
@@ -205,7 +206,7 @@ resolve_params(pNode in, pRule rules, pListNode formal, pListNode cooked) {
 	if (trace)
 	    fprintf(stderr, "resolving cascading parameter: %s -> %s\n",
 		    in->data, this_result);
-	return list_cons(strdup(this_result),
+	return list_cons(nstrdup(this_result),
 			 resolve_params(in->next, rules, formal, cooked));
     }
     return list_cons((void *) resolve_atom(in, rules,

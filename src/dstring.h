@@ -13,14 +13,4 @@
 
 char *dstrcat(char *a, char *b);
 
-#if 0
-#ifdef ULTRIX			/* Ultrix has no strdup() -- yecch! */
-static inline char *
-strdup(char *foo) {
-    return (strcpy(malloc(strlen(foo) + 1), foo));
-};
-
-#endif
-#endif
-
 #endif

@@ -25,12 +25,10 @@ strnnew(char *s, int l) {
     return result;
 }
 
-#ifndef HAVE_STRDUP
 char *
-strdup(char *s) {
+nstrdup(char *s) {
     return strnnew(s, strlen(s));
 }
-#endif
 
 /* concat() allocates a new string and strcat()s two strings together into it.  */
 char *

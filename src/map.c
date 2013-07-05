@@ -8,6 +8,7 @@
 #include <string.h>
 #include <sys/types.h>		/* regex.h seems to need this */
 #include "config.h"
+#include "strfunc.h"
 #include <regex.h>		/* the POSIX.2 regular expression functions */
 #include "map.h"
 
@@ -174,7 +175,7 @@ apply_mapping(char *input, pMapping m) {
     switch (option->action->mode) {
     case replace:
 	free(input);
-	return strdup(option->action->out);
+	return nstrdup(option->action->out);
     case subst:{		/* here we need to do regex substitution. Ooh, tricky! */
 	    char *r =
 		regex_subst(input, option->action->key,

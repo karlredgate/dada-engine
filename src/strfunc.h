@@ -9,9 +9,7 @@
 
 /* kludge to patch a gaping hole in the Ultrix libc */
 
-#ifndef HAVE_STRDUP
-char *strdup(char *);
-#endif
+char *nstrdup(char *);
 
 /* allocate a new string containing the first l characters of s */
 
