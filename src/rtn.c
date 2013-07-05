@@ -1,8 +1,10 @@
 /* rtn.c  acb  8-9-1994 */
 
 #include <stdlib.h>
+#include <string.h>
 #include "rtn.h"
 #include "strfunc.h"
+#include "dump.h"
 
 pNode
 node_cons( enum nodetype t, char *d, pNode cdr ) {
@@ -67,10 +69,9 @@ option_append( pOption a, pOption b ) {
 
 void
 option_map( pOption list, OptionIterator iter, aux_t param ) {
-    if (list) {
-	(*iter) (list, param);
-	option_map(list->next, iter, param);
-    }
+    if ( list == NULL ) return;
+    (*iter)( list, param );
+    option_map( list->next, iter, param );
 }
 
 int
@@ -96,16 +97,23 @@ param_indexof( pListNode list, char *nm ) {
 			(void *) nm);
 }
 
-/* this uses stderr, instead of stdout (as dump_params did). */
+/*
+ * this uses stderr, instead of stdout (as dump_params did).
+ */
 void
 param_dump( pParam params ) {
-    if (params) {
-	fprintf(stderr, "%s ", params->data);
-	dump_params(params->next);
-    }
+    char *p;
+
+    if ( params == NULL ) return;
+
+    p = (char *)( params->data );
+    fprintf( stderr, "%s ", p );
+    dump_params( params->next );
 }
 
-/* make a new rule, sans subtrees */
+/*
+ * make a new rule, sans subtrees
+ */
 pRule
 rule_new( char *symbol, pOption options, pParam params ) {
     pRule r = (pRule) malloc( sizeof(Rule) );

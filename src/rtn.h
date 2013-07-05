@@ -107,6 +107,8 @@ pOption option_nth(pOption list, int index);
 void option_map(pOption list, OptionIterator iter, aux_t param);
 int param_indexof(pListNode list, char *nm);
 
+void param_dump( pParam params );
+
 /* make a new rule, sans subtrees */
 pRule rule_new(char *symbol, pOption options, pParam params);
 

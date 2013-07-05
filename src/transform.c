@@ -3,6 +3,7 @@
  */
 
 #include <stdio.h>
+#include <ctype.h>
 #include "transform.h"
 
 /* regex_subst() does not deallocate its input -- its caller has to do this */

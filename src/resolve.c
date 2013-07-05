@@ -179,31 +179,33 @@ resolve_option(pRule rules, pOption option, pParam formal, pParam cooked) {
     return result;
 }
 
-/* resolve a parameter (node) list into a list of strings; now checks a
-   list of parameters from the parent. */
-
+/*
+ * resolve a parameter (node) list into a list of strings;
+ * now checks a list of parameters from the parent.
+ */
 static pListNode
 resolve_params(pNode in, pRule rules, pListNode formal, pListNode cooked) {
     int index;
 
     if (in == (pNode) NULL)
 	return (pParam) NULL;
+
     /* check if it's a cascading parameter */
     if ((index = param_indexof(formal, in->data)) != -1) {
 	char *this_result;
 	if (trace) {
-	    fprintf(stderr, "resolve_params: formal: ");
-	    param_dump(formal);
-	    fprintf(stderr, "\nresolve_params: cooked: ");
-	    param_dump(cooked);
-	    fprintf(stderr, "\nin->data: %s\n", in->data);
-	    fprintf(stderr, "index of %s == %i\n", in->data, index);
+	    fprintf( stderr, "resolve_params: formal: " );
+	    param_dump( formal );
+	    fprintf( stderr, "\nresolve_params: cooked: " );
+	    param_dump( cooked );
+	    fprintf( stderr, "\nin->data: %s\n", in->data );
+	    fprintf( stderr, "index of %s == %i\n", in->data, index );
 	}
 	this_result =
 	    (index >=
 	     list_length(cooked)) ? "(parameter off end of list)" :
 	    list_nth(cooked, index)->data;
-	if (trace)
+	if ( trace )
 	    fprintf(stderr, "resolving cascading parameter: %s -> %s\n",
 		    in->data, this_result);
 	return list_cons(nstrdup(this_result),
@@ -222,11 +224,17 @@ resolve_params(pNode in, pRule rules, pListNode formal, pListNode cooked) {
 
 /* select an option at random */
 
+/*
+ * this returns an int because it is used as an OptionIterator
+ */
 static int
-_sum_option_weights(pOption o, int *s) {
-    if (trace)
+_sum_option_weights( pOption o, int *s ) {
+    if ( trace ) {
 	fprintf(stderr, "option weight == %i\n", o->randweight);
+    }
+
     (*s) += o->randweight;
+    return 0;
 }
 
 static int
@@ -313,3 +321,8 @@ char *
 resolve_rule(pRule rules, pRule rule) {
     return _resolve_rule(rules, rule, NULL, NULL, NULL, plain);
 }
+
+/*
+ * vim:autoindent
+ * vim:expandtab
+ */
