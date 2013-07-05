@@ -11,6 +11,7 @@
 #include "check.h"
 #include "map.h"
 #include "transform.h"
+#include "resolve.h"
 
 static char *start_symbol = NULL;	/* to override the default start symbol */
 pRule rule_base;
@@ -55,7 +56,7 @@ use_rtn( pRule rtn ) {
 			  wrapwidth);
 	    putc('\n', outfile);
 	} else {
-	    fprintf(outfile, "%s\n", resolve_rule(rtn, initial_rule));
+	    fprintf( outfile, "%s\n", resolve_rule(rtn, initial_rule) );
 	}
     }
 }
