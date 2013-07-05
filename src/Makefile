@@ -1,6 +1,7 @@
 #  directories where things are installed go below
 
 CC	= gcc
+CFLAGS += -Werror
 YACC	= bison -y
 LEX	= flex
 RANLIB	= ranlib
