@@ -25,9 +25,6 @@ all:	dada
 	$(MAKE) -C src
 	$(MAKE) -C doc
 
-dada:	dada.in
-	sed -e "s/@PBDIR@/`echo ${bindir} |sed -e s/\\\\//\\\\\\\\\\\\\\//g `/g" <dada.in |sed -e "s/@DADAROOT@/`echo ${datadir} |sed -e s/\\\\//\\\\\\\\\\\\\\//g `\/dada/g" -e "s/@_CPP@/`echo ${cpp} |sed -e s/\\\\//\\\\\\\\\\\\\\//g `/g" >dada
-
 install:	$(INSTALL_DIRS) \
 	$(bindir)/pb ${bindir}/dada ${infodir}/dada.info
 	$(INSTALL) -m 0644 include/*.pbi ${datadir}/dada/include
@@ -48,7 +45,7 @@ $(INSTALL_DIRS):
 
 
 clean:
-	rm -f *~ dada
+	rm -f *~
 	( cd src ; make clean )
 	( cd doc ; make clean )
 	( cd regex ; make clean )
@@ -58,7 +55,7 @@ distclean:	clean
 
 
 dada.tar.gz:
-	tar cvf dada.tar src/*.[chxy] src/config.h.in man scripts/*.pb Makefile.in */Makefile.in doc/*.texi include/*.pbi dadaprolog.ps dada.in README COPYING regex/*.[ch37] regex/sys/* regex/COPYRIGHT install-sh configure
+	tar cvf dada.tar src/*.[chxy] man scripts/*.pb doc/*.texi include/*.pbi dadaprolog.ps README COPYING regex/*.[ch37] regex/sys/* regex/COPYRIGHT install-sh
 	gzip -9c dada.tar >dada.tar.gz
 	rm dada.tar
 
