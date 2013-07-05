@@ -2,7 +2,6 @@
 *.a
 *.so
 *.so.*
-dada
 config.status
 config.cache
 config.log
