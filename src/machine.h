@@ -47,65 +47,13 @@ typedef struct tagInstr {
 
 pInstr last(pInstr a);
 
-static inline pInstr
-icat(pInstr a, pInstr b) {
-    if (a) {
-	pInstr l = last(a);
-	l->next = b;
-	return a;
-    } else
-	return b;
-};
-
-/* return a simple instruction */
-static inline pInstr
-e_simple(enum opcode op) {
-    pInstr result = (pInstr) malloc(sizeof(Instr));
-    result->opcode = op;
-    result->operand.type = mu;	/* nothing */
-    result->next = NULL;
-    return result;
-};
-
-static inline pInstr
-e_set(char *name) {
-    pInstr result = e_simple(SET);
-    result->operand.type = string_t;
-    result->operand.contents.s = name;
-    return result;
-};
-
-static inline pInstr
-e_pushv(char *name) {
-    pInstr result = e_simple(PUSHV);
-    result->operand.type = string_t;
-    result->operand.contents.s = name;
-    return result;
-};
-
-static inline pInstr
-e_push_int(int i) {
-    pInstr result = e_simple(PUSH);
-    result->operand.type = int_t;
-    result->operand.contents.i = i;
-    return result;
-};
-
-static inline pInstr
-e_push_str(char *s) {
-    pInstr result = e_simple(PUSH);
-    result->operand.type = string_t;
-    result->operand.contents.s = s;
-    return result;
-};
-
-static inline pInstr
-e_invoke(char *name) {
-    pInstr result = e_simple(INVOKE);
-    result->operand.type = string_t;
-    result->operand.contents.s = name;
-    return result;
-};
+pInstr icat(pInstr a, pInstr b);
+pInstr e_simple(enum opcode op);
+pInstr e_set(char *name);
+pInstr e_pushv(char *name);
+pInstr e_push_int(int i);
+pInstr e_push_str(char *s);
+pInstr e_invoke(char *name);
 
 char *exec_stream(pInstr s);
 
