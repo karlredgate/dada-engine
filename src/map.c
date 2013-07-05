@@ -185,4 +185,12 @@ apply_mapping(char *input, pMapping m) {
 	    return r;
 	}
     }
+
+    fprintf(stderr, "apply_mapping: end of function reached - unexpected\n");
+    return NULL;
 }
+
+/*
+ * vim:autoindent
+ * vim:expandtab
+ */

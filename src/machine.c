@@ -27,10 +27,13 @@ static int sp = 0;
 
 extern pRule rule_base;
 
+#if 0
+/* this is not used?? */
 static void
 push( pCell c ) {
     stack[sp++] = *c;
 }
+#endif
 
 /* temp_pop is thusly named because it returns a pointer whose contents will
    be later reclaimed */
@@ -72,6 +75,9 @@ exec_instr( pInstr s ) {
 	/* operand must be a string */
 	tc = temp_pop();
 	switch (tc->type) {
+	case mu:
+            fprintf(stderr, "exec_inst/SET: warning - unhandled case mu\n" );
+            break;
 	case string_t:
 	    var_put(s->operand.contents.s, tc->contents.s);
 	    break;
@@ -83,6 +89,9 @@ exec_instr( pInstr s ) {
     case EMIT:
 	tc = temp_pop();
 	switch (tc->type) {
+	case mu:
+            fprintf(stderr, "exec_inst/EMIT: warning - unhandled case mu\n" );
+            break;
 	case string_t:
 	    return tc->contents.s;
 	case int_t:
@@ -99,6 +108,9 @@ exec_instr( pInstr s ) {
 		push_str("(NULL)");
 	    } else {
 		switch (v->type) {
+	        case mu:
+                    fprintf(stderr, "exec_inst/PUSHV: warning - unhandled case mu\n" );
+                    break;
 		case string_t:
 		    push_str(nstrdup(v->value.s));
 		    break;
@@ -124,6 +136,9 @@ exec_instr( pInstr s ) {
 	break;
     case PUSH:
 	switch (s->operand.type) {
+	case mu:
+            fprintf(stderr, "exec_inst/PUSH: warning - unhandled case mu\n" );
+            break;
 	case string_t:
 	    push_str(nstrdup(s->operand.contents.s));
 	    break;
@@ -203,16 +218,17 @@ exec_instr( pInstr s ) {
     return NULL;
 }
 
-/* execute a stream of instructions, possibly returning a string */
-
+/*
+ * execute a stream of instructions, possibly returning a string
+ */
 char *
 exec_stream( pInstr s ) {
-    while (s) {
-	char *r;
-	if (r = exec_instr(s))
-	    return r;
+    while ( s != NULL) {
+	char *r = exec_instr(s);
+	if ( r != NULL ) return r;
 	s = s->next;
     }
+
     return NULL;
 }
 
