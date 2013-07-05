@@ -81,3 +81,8 @@ check_rtn(pRule rules) {
     check_for_undefined(rules);
     check_for_unused(rules);
 }
+
+/*
+ * vim:autoindent
+ * vim:expandtab
+ */

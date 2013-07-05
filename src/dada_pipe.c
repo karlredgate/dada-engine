@@ -9,6 +9,8 @@
 #include <unistd.h>
 #include <signal.h>
 
+#include "error.h"
+
 #ifndef PREPROCESSOR
 #define PREPROCESSOR "cpp"
 #endif
@@ -16,8 +18,6 @@
 #ifndef PB_ENGINE
 #define PB_ENGINE "pb"
 #endif
-
-#define DIE(str) { fprintf(stderr, "%s: %s\n", argv[0], str); exit(1); }
 
 void
 usage(char *whoami) {
@@ -108,3 +108,8 @@ main(int argc, char *argv[]) {
     wait(NULL);
     exit(0);
 }
+
+/*
+ * vim:autoindent
+ * vim:expandtab
+ */

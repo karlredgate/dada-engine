@@ -6,7 +6,7 @@ LEX	= flex
 RANLIB	= ranlib
 
 # the pb language library
-LIBPB_OBJS = check.o dict.o dstring.o dump.o machine.o map.o ptrlist.o \
+LIBPB_OBJS = check.o dict.o dstring.o dump.o error.o machine.o map.o ptrlist.o \
 	resolve.o resstack.o rtn.o strfunc.o transform.o variables.o
 
 PB_OBJS	= pb.o y.tab.o lex.yy.o wrap.o
