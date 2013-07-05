@@ -76,7 +76,8 @@ option_map( pOption list, OptionIterator iter, aux_t param ) {
 
 int
 option_length( pOption list ) {
-    return (list) ? option_length(list->next) + 1 : 0;
+    if ( list == NULL ) return 0;
+    return option_length(list->next) + 1;
 }
 
 pOption

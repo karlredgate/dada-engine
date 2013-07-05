@@ -157,6 +157,9 @@ resolve_atom(pNode atom, pRule rules, pListNode formal, pListNode cooked) {
 	}
 
     }
+
+    fprintf( stderr, "resolve_atom: warning reached end of function unexpectedly\n" );
+    return NULL;
 }
 
 static void
@@ -237,6 +240,10 @@ _sum_option_weights( pOption o, int *s ) {
     return 0;
 }
 
+/*
+ * return 0 is not used.  Provided because used as an option
+ * iterator, and that requires this signature.
+ */
 static int
 _incr_option_weight(pOption o, void *foo) {
 #if 0
@@ -244,6 +251,7 @@ _incr_option_weight(pOption o, void *foo) {
 #else
     o->randweight = ((o->randweight + 1) * 3) / 2;
 #endif
+    return 0;
 }
 
 pOption
@@ -284,37 +292,39 @@ select_option(pOption options, int *last, enum resmode mode) {
     }
 }
 
-/* resolve the rule rule recursively, using rules as the rule-base.
-   This function now accepts the parent's formal and actual rules
-   and also the resolution mode. */
-
+/*
+ * resolve the rule rule recursively, using rules as the rule-base.
+ * This function now accepts the parent's formal and actual rules
+ * and also the resolution mode.
+ */
 static char *
 _resolve_rule(pRule rules, pRule rule, pNode param,
 	      pListNode parent_formal, pListNode parent_cooked,
 	      enum resmode mode) {
-    if (rule) {
-	char *r;
-	pParam cooked =
-	    resolve_params(param, rules, parent_formal, parent_cooked);
-	int num_options = option_length(rule->options);
-	int choice;
+    if ( rule == NULL ) return NULL;
 
-	if (trace)
-	    printf("Resolving rule <%s>\n", rule->symbol);
+    char *r;
+    pParam cooked =
+        resolve_params(param, rules, parent_formal, parent_cooked);
 
-	/* make the choice */
+    if ( trace ) {
+        printf("Resolving rule <%s>\n", rule->symbol);
+    }
 
-	r = resolve_option(rules,
-			   select_option(rule->options,
-					 &(rule->last_choice), mode),
-			   rule->params, cooked);
+    /* make the choice */
 
-	list_free(cooked, free_car_destructor);
-	if (trace)
-	    printf("resolve_option returned \"%s\"\n", r);
-	return r;
-    } else
-	return NULL;
+    r = resolve_option(rules,
+    		   select_option(rule->options,
+    				 &(rule->last_choice), mode),
+    		   rule->params, cooked);
+
+    list_free(cooked, free_car_destructor);
+
+    if ( trace ) {
+        printf("resolve_option returned \"%s\"\n", r);
+    }
+
+    return r;
 }
 
 char *
