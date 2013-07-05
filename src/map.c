@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>		/* regex.h seems to need this */
-#include "config.h"
 #include "strfunc.h"
 #include <regex.h>		/* the POSIX.2 regular expression functions */
 #include "map.h"

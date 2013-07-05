@@ -5,8 +5,6 @@
 #ifndef __STRFUNC_H
 #define __STRFUNC_H
 
-#include "config.h"
-
 /* kludge to patch a gaping hole in the Ultrix libc */
 
 char *nstrdup(char *);
