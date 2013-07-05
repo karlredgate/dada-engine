@@ -15,14 +15,20 @@
 static char *start_symbol = NULL;	/* to override the default start symbol */
 pRule rule_base;
 extern pRule initial_rule;
-int dump_rtn = 0, inhibit = 0, verbose = 0, trace = 0, old_probability =
-    0, wrapwidth = 80;
+
+int dump_rtn = 0;
+int inhibit = 0;
+int verbose = 0;
+int trace = 0;
+int old_probability = 0;
+int wrapwidth = 80;
+
 FILE *outfile;
 extern int yydebug;
 
 /* resolve a RTN */
 void
-use_rtn(pRule rtn) {
+use_rtn( pRule rtn ) {
     if (!rtn)
 	return;
 
@@ -55,7 +61,7 @@ use_rtn(pRule rtn) {
 }
 
 int
-strtoseed(char *s) {
+strtoseed( char *s ) {
     int r = 0;
 
     if (atoi(s))
@@ -68,7 +74,7 @@ strtoseed(char *s) {
 }
 
 void
-initrandom(int seed) {
+initrandom( int seed ) {
     struct timeval tv;
 
     gettimeofday(&tv, NULL);
@@ -81,7 +87,7 @@ initrandom(int seed) {
 }
 
 int
-main(int argc, char *argv[]) {
+main( int argc, char **argv ) {
     int i;
     char *p;
 
@@ -132,6 +138,6 @@ main(int argc, char *argv[]) {
     }
 
     /* srandom(rseed?strtoseed(rseed):time(NULL)); */
-    initrandom(rseed ? strtoseed(rseed) : 0);
+    initrandom( rseed ? strtoseed(rseed) : 0 );
     yyparse();
 }

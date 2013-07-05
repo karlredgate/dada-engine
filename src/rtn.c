@@ -5,20 +5,24 @@
 #include "strfunc.h"
 
 pNode
-node_cons(enum nodetype t, char *d, pNode cdr) {
-    pNode r;
+node_cons( enum nodetype t, char *d, pNode cdr ) {
+    pNode r = (pNode) malloc( sizeof(Node) );
 
-    if (r = (pNode) malloc(sizeof(Node))) {
-	r->type = t;
-	r->data = d;		/* pre-duplicated in the lexer */
-	r->params = NULL;	/* parameters, if any, are added later. */
-	r->next = cdr;
-    };
+    if ( r == NULL ) {
+        fprintf( stderr, "node_cons: memory allocation failure\n" );
+        exit( -1 );
+    }
+
+    r->type = t;
+    r->data = d;		/* pre-duplicated in the lexer */
+    r->params = NULL;	/* parameters, if any, are added later. */
+    r->next = cdr;
+
     return r;
 }
 
 pNode
-node_append(pNode a, pNode b) {
+node_append( pNode a, pNode b ) {
     pNode r = a;
 
     while (r->next)
@@ -28,7 +32,7 @@ node_append(pNode a, pNode b) {
 }
 
 void
-node_map(pNode list, NodeIterator iter, aux_t param) {
+node_map( pNode list, NodeIterator iter, aux_t param ) {
     if (list) {
 	(*iter) (list, param);
 	node_map(list->next, iter, param);
@@ -36,7 +40,7 @@ node_map(pNode list, NodeIterator iter, aux_t param) {
 }
 
 pOption
-option_cons(pNode car, pOption cdr) {
+option_cons( pNode car, pOption cdr ) {
     pOption r;
 
     if (r = (pOption) malloc(sizeof(Option))) {
@@ -48,7 +52,7 @@ option_cons(pNode car, pOption cdr) {
 }
 
 pOption
-option_append(pOption a, pOption b) {
+option_append( pOption a, pOption b ) {
     pOption r = a;
 
     while (r->next)
@@ -58,7 +62,7 @@ option_append(pOption a, pOption b) {
 }
 
 void
-option_map(pOption list, OptionIterator iter, aux_t param) {
+option_map( pOption list, OptionIterator iter, aux_t param ) {
     if (list) {
 	(*iter) (list, param);
 	option_map(list->next, iter, param);
@@ -66,15 +70,15 @@ option_map(pOption list, OptionIterator iter, aux_t param) {
 }
 
 int
-option_length(pOption list) {
+option_length( pOption list ) {
     return (list) ? option_length(list->next) + 1 : 0;
 }
 
 pOption
-option_nth(pOption list, int index) {
-    return ((list)
-	    ? ((index == 0) ? list : option_nth(list->next,
-						index - 1)) : NULL);
+option_nth( pOption list, int index ) {
+    if ( list  == NULL ) return NULL;
+    if ( index == 0    ) return list;
+    return option_nth(list->next, index - 1);
 }
 
 #if 0
@@ -124,19 +128,19 @@ _param_indexof(pParam list, char *nm, int futplex) {
 #endif
 
 static int
-param_indexof_iter(pListNode l, char *str) {
+param_indexof_iter( pListNode l, char *str ) {
     return (strcmp(l->data, str) == 0);
 }
 
 int
-param_indexof(pListNode list, char *nm) {
+param_indexof( pListNode list, char *nm ) {
     return list_indexof(list, (ListIterator) & param_indexof_iter,
 			(void *) nm);
 }
 
 /* this uses stderr, instead of stdout (as dump_params did). */
 void
-param_dump(pParam params) {
+param_dump( pParam params ) {
     if (params) {
 	fprintf(stderr, "%s ", params->data);
 	dump_params(params->next);
@@ -145,34 +149,36 @@ param_dump(pParam params) {
 
 /* make a new rule, sans subtrees */
 pRule
-rule_new(char *symbol, pOption options, pParam params) {
-    pRule r;
+rule_new( char *symbol, pOption options, pParam params ) {
+    pRule r = (pRule) malloc( sizeof(Rule) );
 
-    if (r = (pRule) malloc(sizeof(Rule))) {
-	r->symbol = symbol;
-	r->options = options;
-	r->params = params;
-	r->left = r->right = (pRule) NULL;
-	r->last_choice = -1;	/* no choices made, so everything's Allowed. */
+    if ( r == NULL ) {
+        fprintf( stderr, "rule_new: memory allocation failure\n" );
+        exit( -1 );
     }
+
+    r->symbol = symbol;
+    r->options = options;
+    r->params = params;
+    r->left = r->right = (pRule) NULL;
+    r->last_choice = -1;	/* no choices made, so everything's Allowed. */
+
     return r;
 }
 
 /* a recursive insertion function */
 
 pRule
-rule_insert(pRule parent, pRule newrule) {
-    if (parent) {
-	if (strcmp(newrule->symbol, parent->symbol) > 0) {
-	    parent->right = rule_insert(parent->right, newrule);
-	    return parent;
-	} else {
-	    parent->left = rule_insert(parent->left, newrule);
-	    return parent;
-	}
-    } else {
-	return newrule;
+rule_insert( pRule parent, pRule newrule ) {
+    if ( parent == NULL ) return newrule;
+
+    if (strcmp(newrule->symbol, parent->symbol) > 0) {
+        parent->right = rule_insert(parent->right, newrule);
+        return parent;
     }
+
+    parent->left = rule_insert(parent->left, newrule);
+    return parent;
 }
 
 pRule
@@ -191,9 +197,14 @@ rule_find(pRule tree, char *name) {
 
 void
 rule_inorder_traverse(pRule tree, RuleIterator iter, aux_t param) {
-    if (tree) {
-	rule_inorder_traverse(tree->left, iter, param);
-	(*iter) (tree, param);
-	rule_inorder_traverse(tree->right, iter, param);
-    }
+    if ( tree == NULL ) return;
+
+    rule_inorder_traverse( tree->left, iter, param );
+    (*iter)( tree, param );
+    rule_inorder_traverse( tree->right, iter, param );
 }
+
+/*
+ * vim:autoindent
+ * vim:expandtab
+ */

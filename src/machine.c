@@ -28,7 +28,7 @@ static int sp = 0;
 extern pRule rule_base;
 
 static inline void
-push(pCell c) {
+push( pCell c ) {
     stack[sp++] = *c;
 }
 
@@ -40,13 +40,13 @@ temp_pop() {
 }
 
 static inline void
-push_int(int i) {
+push_int( int i ) {
     stack[sp].type = int_t;
     stack[sp++].contents.i = i;
 }
 
 static inline void
-push_str(char *s) {
+push_str( char *s ) {
     stack[sp].type = string_t;
     stack[sp++].contents.s = s;
 }
@@ -54,7 +54,7 @@ push_str(char *s) {
 /* find last instruction in list */
 
 pInstr
-last(pInstr a) {
+last( pInstr a ) {
     if (a == NULL)
 	return NULL;
     if (a->next == NULL)
@@ -63,7 +63,7 @@ last(pInstr a) {
 }
 
 static inline char *
-exec_instr(pInstr s) {
+exec_instr( pInstr s ) {
     pCell tc, tc2;
     char buffer[16];
 
@@ -206,7 +206,7 @@ exec_instr(pInstr s) {
 /* execute a stream of instructions, possibly returning a string */
 
 char *
-exec_stream(pInstr s) {
+exec_stream( pInstr s ) {
     while (s) {
 	char *r;
 	if (r = exec_instr(s))
@@ -221,7 +221,7 @@ char *opname[] = {
 };
 
 void
-dump_code(pInstr s) {
+dump_code( pInstr s ) {
     while (s) {
 	printf("%s ", opname[s->opcode]);
 	switch (s->operand.type) {
