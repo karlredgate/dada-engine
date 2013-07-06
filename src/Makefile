@@ -1,7 +1,7 @@
 #  directories where things are installed go below
 
 CC	= gcc
-CFLAGS += -Werror
+CFLAGS += -g -Wall -Werror
 YACC	= bison -y
 LEX	= flex
 RANLIB	= ranlib
@@ -14,8 +14,6 @@ PB_OBJS	= pb.o y.tab.o lex.yy.o wrap.o
 #PBC_OBJS =  pbc.o y.tab.o lex.yy.o rtn.o strfunc.o dstring.o check.o map.o \
 #	 ptrlist.o variables.o transform.o machine.o ${REGEX} ${EXTRAOBJS} \
 #	emit_ps.o resolve.o dump.o
-#CFLAGS	= -g ${INCDIRS} ${DEFINES}
-CFLAGS	= -g  ${DEFINES}
 
 all:	pb
 
@@ -24,7 +22,7 @@ libpb.a:	$(LIBPB_OBJS)
 	$(RANLIB) libpb.a
 
 pb:	$(PB_OBJS) libpb.a
-	$(CC) -o pb ${PB_OBJS} -L. -lpb   
+	$(CC) -o pb $(PB_OBJS) -L. -lpb   
 
 #pbc:	$(PBC_OBJS)
 #	$(CC) -o pbc $(PBC_OBJS)
