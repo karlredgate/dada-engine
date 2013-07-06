@@ -22,42 +22,18 @@ static int errors = 0;
 static int
 undef_iter2(pNode a, struct rule_closure *closure) {
     switch ( a->type ) {
-    case deref:
-        fprintf( stderr, "undef_iter2: unhandled type 'deref'\n" );
-	break;
-    case literal:
-        fprintf( stderr, "undef_iter2: unhandled type 'literal'\n" );
-	break;
-    case choice:
-        fprintf( stderr, "undef_iter2: unhandled type 'choice'\n" );
-	break;
-    case star:
-        fprintf( stderr, "undef_iter2: unhandled type 'star'\n" );
-	break;
-    case plus:
-        fprintf( stderr, "undef_iter2: unhandled type 'plus'\n" );
-	break;
-    case repeat_const:
-        fprintf( stderr, "undef_iter2: unhandled type 'repeat_const'\n" );
-	break;
-    case repeat_var:
-        fprintf( stderr, "undef_iter2: unhandled type 'repeat_var'\n" );
-	break;
-    case var_conddef:
-        fprintf( stderr, "undef_iter2: unhandled type 'var_conddef'\n" );
-	break;
-    case var_def:
-        fprintf( stderr, "undef_iter2: unhandled type 'var_def'\n" );
-	break;
-    case var_ref:
-        fprintf( stderr, "undef_iter2: unhandled type 'var_ref'\n" );
-	break;
-    case code:
-        fprintf( stderr, "undef_iter2: unhandled type 'code'\n" );
-	break;
-    case silence:
-        fprintf( stderr, "undef_iter2: unhandled type 'silence'\n" );
-	break;
+    case        deref: break;
+    case      literal: break;
+    case       choice: break;
+    case         star: break;
+    case         plus: break;
+    case repeat_const: break;
+    case   repeat_var: break;
+    case  var_conddef: break;
+    case      var_def: break;
+    case      var_ref: break;
+    case         code: break;
+    case      silence: break;
     case symbol:{
 	    if (param_indexof(closure->rule->params, a->data) == -1) {
 		/* this node is not a parameter */
