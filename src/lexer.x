@@ -1,5 +1,6 @@
 %{
-/* lexer.x  lexical analyser for pb, the psychobabble generator.
+/*
+ * lexer.x  lexical analyser for pb, the psychobabble generator.
  *          author:         acb
  *          commenced:      8-9-1994
  */
@@ -87,3 +88,11 @@ ident           [A-Za-z_][A-Za-z0-9_\-]*
 DEC ULTRIX) does. */
 int yywrap() { return 1; }
 #endif
+
+void
+fake_call() {
+    char c = '\0';
+    char buffer[10];
+    yyunput(c,buffer);
+    input();
+}

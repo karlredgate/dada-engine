@@ -38,6 +38,16 @@ extern int verbose;
 
 extern void use_rtn(pRule rtn);
 
+extern int cur_line;
+extern char cur_file[1024];
+
+extern int yylex( void );
+
+int yyerror( const char *s ) {
+    fprintf(stderr, "%s:%i: %s\n", cur_file, cur_line, s);
+    return 0;
+}
+
 %}
 
 %union {
@@ -291,14 +301,6 @@ expr: T_INTEGER { $$ = e_push_int($1); }
 ;
 
 %%
-
-extern int cur_line;
-extern char cur_file[1024];
-
-yyerror(char *s)
-{
-  fprintf(stderr, "%s:%i: %s\n", cur_file, cur_line, s);
-};
 
 #if 0
 
