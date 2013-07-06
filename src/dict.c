@@ -2,8 +2,10 @@
  * general-purpose string-keyed associative arrays
  */
 
-#include "dict.h"
 #include <stdlib.h>
+#include <string.h>
+
+#include "dict.h"
 
 static struct dictnode *
 nnode(char *k, void *v) {
@@ -21,7 +23,7 @@ insert(struct dictnode *dn, char *k, void *val) {
 
     if (!dn)
 	return nnode(k, val);
-    c = strcmp(k, dn->key);
+    c = strcmp( k, dn->key );
 
     if (c == 0) {
 	dn->value = val;

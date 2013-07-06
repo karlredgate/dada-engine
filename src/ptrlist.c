@@ -69,4 +69,10 @@ list_nth(pListNode list, int index) {
 int
 free_car_destructor(pListNode n, void *foo) {
     free(n->data);
+    return 0;
 }
+
+/*
+ * vim:autoindent
+ * vim:expandtab
+ */
