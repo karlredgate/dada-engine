@@ -303,37 +303,5 @@ expr: T_INTEGER { $$ = e_push_int($1); }
 %%
 
 #if 0
-
-int strtoseed(char *s)
-{
-    int r=0;
-    if(atoi(s))return atoi(s);
-    while(*s) { r+=*(s++); }
-    return r;
-};
-
-main(int argc, char *argv[])
-{
-  int i;
-
-  char *rseed=NULL; /* a random seed, in string form */
-
-  for(i=1; i<argc; i++) {
-    if(*(argv[i])=='-')
-      switch(argv[i][1]) {
-      case 'd': dump_rtn = 1;
-      case 'i': inhibit = 1; break;
-      case 'o': outfile=fopen(argv[++i], "w"); break;
-      case 'p': old_probability=1; break;
-      case 'r': rseed = argv[++i]; break;
-      case 's': start_symbol = argv[++i]; break;
-      case 't': trace=1; break;
-      case 'v': verbose = 1; break;
-      case 'y': yydebug=1; break;
-      };
-  };
-  srandom(rseed?strtoseed(rseed):time(NULL));
-  yyparse();
-};
-
+/* main program would go here */
 #endif
