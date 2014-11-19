@@ -78,17 +78,16 @@ strtoseed( char *s ) {
     return r;
 }
 
-void
-initrandom( int seed ) {
-    struct timeval tv;
+static int
+pick_seed( char *arg ) {
+    if ( arg != NULL ) return strtoseed(arg);
 
+    /* if /dev/random exists use that */
+
+    struct timeval tv;
     gettimeofday(&tv, NULL);
 
-    if (seed == 0) {
-	seed = tv.tv_usec;
-    }
-
-    srandom(seed);
+    return tv.tv_usec;
 }
 
 int
@@ -142,8 +141,7 @@ main( int argc, char **argv ) {
 	}
     }
 
-    /* srandom(rseed?strtoseed(rseed):time(NULL)); */
-    initrandom( rseed ? strtoseed(rseed) : 0 );
+    srandom( pick_seed(rseed) );
     yyparse();
 
     return 0;
