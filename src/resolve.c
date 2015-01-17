@@ -43,10 +43,30 @@ static inline char *resolve_option(pRule rules, pOption option,
                                    pParam formal, pParam cooked);
 
 
+static char *
+resolve_symbol( pNode atom, pRule rules, pListNode formal, pListNode cooked )
+{
+    int index;
+
+    /* first, check if this symbol is a parameter of the current rule */
+    index = param_indexof(formal, atom->data);
+
+    if ( index == -1 ) {
+        /* it is not a parameter substitution; resolve from rules */
+        return _resolve_rule(rules, rule_find(rules, atom->data),
+                         atom->params, formal, cooked, atom->mode);
+    }
+
+    if (index >= list_length(cooked)) {
+        return (nstrdup("(parameter off end of list)"));
+    }
+
+    return (nstrdup(list_nth(cooked, index)->data));
+}
+
 /* resolve an atom */
 static inline char *
 resolve_atom(pNode atom, pRule rules, pListNode formal, pListNode cooked) {
-    int index;
     char *result = NULL;        /* for star and plus */
     int i;
 
@@ -56,20 +76,7 @@ resolve_atom(pNode atom, pRule rules, pListNode formal, pListNode cooked) {
     switch (atom->type) {
     case literal:
         return nstrdup(atom->data);
-    case symbol: {
-        /* first, check if this symbol is a parameter of the current rule */
-        index = param_indexof(formal, atom->data);
-        if ( index != -1 ) {
-            if (index >= list_length(cooked)) {
-                return (nstrdup("(parameter off end of list)"));
-            }
-            return (nstrdup(list_nth(cooked, index)->data));
-        }
-
-        /* it is not a parameter substitution; resolve from rules */
-        return _resolve_rule(rules, rule_find(rules, atom->data),
-                             atom->params, formal, cooked, atom->mode);
-    }
+    case symbol: return resolve_symbol( atom, rules, formal, cooked );
     case mapping: {
         if (map_lookup(mappings, atom->data)) {
             return apply_mapping(resolve_atom(atom->params, rules, formal,
