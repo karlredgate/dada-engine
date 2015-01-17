@@ -42,6 +42,7 @@ static char *_resolve_rule(pRule, pRule, pNode, pListNode, pListNode,
 static inline char *resolve_option(pRule rules, pOption option,
                                    pParam formal, pParam cooked);
 
+static inline char * resolve_atom(pNode, pRule, pListNode, pListNode );
 
 static char *
 resolve_symbol( pNode atom, pRule rules, pListNode formal, pListNode cooked )
@@ -64,6 +65,19 @@ resolve_symbol( pNode atom, pRule rules, pListNode formal, pListNode cooked )
     return (nstrdup(list_nth(cooked, index)->data));
 }
 
+static char *
+resolve_mapping( pNode atom, pRule rules, pListNode formal, pListNode cooked )
+{
+    char *that_atom;
+
+    if ( map_lookup(mappings, atom->data) ) {
+        that_atom = resolve_atom(atom->params, rules, formal, cooked);
+        return apply_mapping( that_atom, map_lookup(mappings, atom->data) );
+    }
+    that_atom = resolve_atom( atom->params, rules, formal, cooked );
+    return apply_xform( that_atom, trans_lookup(transformations, atom->data) );
+}
+
 /* resolve an atom */
 static inline char *
 resolve_atom(pNode atom, pRule rules, pListNode formal, pListNode cooked) {
@@ -76,17 +90,8 @@ resolve_atom(pNode atom, pRule rules, pListNode formal, pListNode cooked) {
     switch (atom->type) {
     case literal:
         return nstrdup(atom->data);
-    case symbol: return resolve_symbol( atom, rules, formal, cooked );
-    case mapping: {
-        if (map_lookup(mappings, atom->data)) {
-            return apply_mapping(resolve_atom(atom->params, rules, formal,
-                                              cooked),
-                                 map_lookup(mappings, atom->data));
-        }
-        return
-            apply_xform(resolve_atom(atom->params, rules, formal, cooked),
-                        trans_lookup(transformations, atom->data));
-    }
+    case symbol:  return resolve_symbol( atom, rules, formal, cooked );
+    case mapping: return resolve_mapping( atom, rules, formal, cooked );
     case deref: {
         return _resolve_rule(rules,
                              rule_find(rules,
