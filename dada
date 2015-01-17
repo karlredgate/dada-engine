@@ -6,6 +6,7 @@
 PBDIR="/usr/local/bin"
 DADAROOT="/usr/local/lib/dada"
 CPP="/lib/cpp"
+[ -f $CPP ] || CPP=/usr/bin/cpp
 
 #CPP="/lib/cpp"
 #CPPARGS="-lang-c++"
