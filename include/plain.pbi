@@ -61,7 +61,7 @@ FOOTNOTE(text): ?tx=text // the inline-code parameter bug^H^H^Hfeature.
 //
 // ************************************************************************
 
-// here, text styles aren't really used.
+/* here, text styles aren't really used. */
 
 BOLD(foo): foo ;
 ITALIC(foo): foo ;
