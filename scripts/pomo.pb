@@ -1,4 +1,4 @@
-// pomo.pb  acb  ??-09-24 AU
+/* pomo.pb  acb  ??-09-24 AU */
 // pb script for generating postmodern verbiage
 // Updated, format-independent version
 // Copyright (C) 1995, 1996 Andrew C. Bulhak
@@ -6,7 +6,7 @@
 // distribute it as long as this notice is retained and any modifications
 // in distributed copies are clearly denoted.
 
-// if we're using troff, we want two columns
+/* if we're using troff, we want two columns */
 
 #define TROFF_2COLUMN
 
@@ -15,13 +15,13 @@
 
 // global variables used:
 //  v-citable			name of artist who is cited throughout text
-//  v-subject, v-subject-2	a noun about which this rant is (i.e., a term)
+/*  v-subject, v-subject-2	a noun about which this rant is (i.e., a term) */
 //  v-subject-3			as above, but changes in each section
 
 // mappings start here
 
-// trim trailing 'e's from word. Used when deriving "deconstructivist" from
-// "deconstructive", for instance.
+/* trim trailing 'e's from word. Used when deriving "deconstructivist" from */
+/* "deconstructive", for instance. */
 
 trim_e:
 	".*e$" -> "e$"/""
@@ -31,7 +31,7 @@ strip_the:
 	".*" -> "^[Tt]he "/""
 ;
 
-// make an artist's name into the symbol representing his/her works
+/* make an artist's name into the symbol representing his/her works */
 
 make_cite:
 	".*" -> "$"/"-works"
@@ -125,7 +125,7 @@ dept-topic:
 // political correctness here
 	"Gender Politics" | "Peace Studies" |
 	"Future Studies" |
-// slightly silly, perhaps
+/* slightly silly, perhaps */
 	"Ontology" | "Semiotics" | "Deconstruction" | "Sociolinguistics"
 ;
 
@@ -137,7 +137,7 @@ acad-institution:	"Massachusetts Institute of Technology"
 	| "Carnegie-Mellon University"
 	| "University of California, Berkeley"
 	| "University of Illinois"
-// but who could forget Doctress Fruitopia's alma mater.....
+/* but who could forget Doctress Fruitopia's alma mater..... */
 	| "University of Massachusetts, Amherst"
 	| "University of " university-of
 	| "University of " university-of
@@ -220,8 +220,8 @@ predominant-concept: "the distinction between " foo = dualisable-word " and " $f
 pseudo-quote: big-thing " is " state-of-being
 ;
 
-// we'll be ontologically masturbating in relation to the works of various
-// artists and "artists" a lot.....
+/* we'll be ontologically masturbating in relation to the works of various */
+/* artists and "artists" a lot..... */
 
 sent-about-citable-and-dualism(artist dualism):  
 	@artist>make_cite " is about " dualism " where " @artist>make_cite
@@ -334,7 +334,7 @@ main-theme-of: main " theme of " | "theme characterizing"
 
 main: "main" | "primary" | "characteristic" ;
 
-// something to ``justify'' a point.
+/* something to ``justify'' a point. */
 
 justifier:	just-name=generic-surname footnote-cite(just-name<<generic-surname) implies-that
 	| "if " term " holds, "
@@ -699,7 +699,7 @@ generic-surname:
 "Bailey" | "Brophy" | "Cameron" | "Humphrey" | "Pickett" 
 | "Reicher" | "Sargeant" | "Scuglia" | "Werther" | "Wilson" 
 // net.crackpots
-| "McElwaine" | "Abian" | "von Ludwig" // Plutonium's real name
+| "McElwaine" | "Abian" | "von Ludwig" /* Plutonium's real name */
 | "Parry" | "Drucker" | "Dahmus" | "Dietrich" // a Monash local
 | "Hubbard" 
 // People from flat-earth, particularly those who helped with the Dada Engine

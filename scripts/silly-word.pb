@@ -16,12 +16,12 @@ prefix-or-random: prefix | random-syllable ;
 
 random-syllable: random-syllable-2 | plosive-cons-a random-syllable-2 ;
 
-random-syllable-2: consonant vowel sibilant-cons // `fut'
+random-syllable-2: consonant vowel sibilant-cons /* `fut' */
 	| sibilant-bit vowel plosive-cons
 	| consonant vowel double(plosive-cons-a)
         | double-around(consonant vowel)
         | double-around(consonant "oo")
-	| sibilant-bit vowel sibilant-cons plosive-cons-b  // ``schlorpht''
+	| sibilant-bit vowel sibilant-cons plosive-cons-b  /* ``schlorpht'' */
 	| interleave-two-with-one(consonant consonant vowel) // "bodo"
 ;
 
