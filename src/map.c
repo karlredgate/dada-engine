@@ -190,7 +190,4 @@ apply_mapping(char *input, pMapping m) {
     return NULL;
 }
 
-/*
- * vim:autoindent
- * vim:expandtab
- */
+/* vim: set autoindent expandtab sw=4: */

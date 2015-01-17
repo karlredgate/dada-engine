@@ -29,7 +29,4 @@ dstrcat(char *a, char *b) {
     return r;
 }
 
-/*
- * vim:autoindent
- * vim:expandtab
- */
+/* vim: set autoindent expandtab sw=4: */

@@ -107,3 +107,5 @@ emit_c(FILE * f, pRule rules, pMapping mappings,
     rule_inorder_traverse(rules, (RuleIterator) & c_rule_iterator,
 			  (aux_t) & st);
 }
+
+/* vim: set autoindent expandtab sw=4: */

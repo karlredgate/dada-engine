@@ -202,7 +202,4 @@ dump_transformations( pListNode list ) {
     list_mapcar(list, (ListIterator) dump_xform_iter, NULL);
 }
 
-/*
- * vim:autoindent
- * vim:expandtab
- */
+/* vim: set autoindent expandtab sw=4: */

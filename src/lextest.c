@@ -23,3 +23,5 @@ main() {
 	putchar('\n');
     }
 }
+
+/* vim: set autoindent expandtab sw=4: */

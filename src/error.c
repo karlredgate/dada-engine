@@ -16,3 +16,5 @@ die( char *file, int line, char *message ) {
 
     exit( -err );
 }
+
+/* vim: set autoindent expandtab sw=4: */

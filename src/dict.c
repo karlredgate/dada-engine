@@ -135,3 +135,5 @@ dict_ord(Dict d, char *key) {
 	return dict_ord(d->left, key);
     return dict_size(d->left) + dict_ord(d->right, key) + 1;
 }
+
+/* vim: set autoindent expandtab sw=4: */

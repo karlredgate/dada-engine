@@ -136,7 +136,4 @@ var_put_int(char *var_name, int value) {
     vars = var_insert_int(vars, var_name, value);
 }
 
-/*
- * vim:autoindent
- * vim:expandtab
- */
+/* vim: set autoindent expandtab sw=4: */

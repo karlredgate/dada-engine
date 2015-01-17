@@ -124,3 +124,5 @@ apply_xform(char *input, pTransformation xfm) {
 
     return input;
 }
+
+/* vim: set autoindent expandtab sw=4: */

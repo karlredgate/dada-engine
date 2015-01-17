@@ -105,3 +105,5 @@ itoa(int i) {
     sprintf(buffer, "%i", i);
     return strdup(buffer);
 }
+
+/* vim: set autoindent expandtab sw=4: */

@@ -35,3 +35,5 @@ main(int argc, char *argv[]) {
     }
     yyparse();
 }
+
+/* vim: set autoindent expandtab sw=4: */

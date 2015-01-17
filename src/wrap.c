@@ -58,3 +58,5 @@ print_wrapped(FILE * f, char *s, int cols) {
 	start = 0;
     }
 }
+
+/* vim: set autoindent expandtab sw=4: */

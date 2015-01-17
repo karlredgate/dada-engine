@@ -98,7 +98,4 @@ check_rtn(pRule rules) {
     check_for_unused(rules);
 }
 
-/*
- * vim:autoindent
- * vim:expandtab
- */
+/* vim: set autoindent expandtab sw=4: */

@@ -171,7 +171,4 @@ rule_inorder_traverse(pRule tree, RuleIterator iter, aux_t param) {
     rule_inorder_traverse( tree->right, iter, param );
 }
 
-/*
- * vim:autoindent
- * vim:expandtab
- */
+/* vim: set autoindent expandtab sw=4: */

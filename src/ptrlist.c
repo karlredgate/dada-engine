@@ -72,7 +72,4 @@ free_car_destructor(pListNode n, void *foo) {
     return 0;
 }
 
-/*
- * vim:autoindent
- * vim:expandtab
- */
+/* vim: set autoindent expandtab sw=4: */
