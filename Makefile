@@ -60,7 +60,7 @@ dada.tar.gz:
 	rm dada.tar
 
 test:
-	/lib/cpp -Iinclude scripts/pomo.pb | sed -e '/^#/d' | ./src/pb > /dev/null
-	/lib/cpp -Iinclude scripts/pomo.pb | sed -e '/^#/d' | ./src/pb > /dev/null
-	/lib/cpp -Iinclude scripts/pomo.pb | sed -e '/^#/d' | ./src/pb > /dev/null
-	/lib/cpp -Iinclude scripts/silly-word.pb | sed -e '/^#/d' | ./src/pb > /dev/null
+	cpp -Iinclude scripts/pomo.pb | sed -e '/^#/d' | ./src/pb > /dev/null
+	cpp -Iinclude scripts/pomo.pb | sed -e '/^#/d' | ./src/pb > /dev/null
+	cpp -Iinclude scripts/pomo.pb | sed -e '/^#/d' | ./src/pb > /dev/null
+	cpp -Iinclude scripts/silly-word.pb | sed -e '/^#/d' | ./src/pb > /dev/null

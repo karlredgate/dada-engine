@@ -5,6 +5,7 @@
 
 #include <sys/time.h>
 #include <stdlib.h>
+#include <limits.h>
 #include <stdio.h>
 #include <string.h>
 #include "rtn.h"
@@ -65,12 +66,11 @@ use_rtn( pRule rtn ) {
     }
 }
 
-int
+long
 strtoseed( char *s ) {
-    int r = 0;
+    long r = strtol(s, NULL, 10);
 
-    if (atoi(s))
-	return atoi(s);
+    if ( r != 0 ) return r;
 
     while (*s) {
 	r += *(s++);
