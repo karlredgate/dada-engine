@@ -174,7 +174,7 @@ apply_mapping(char *input, pMapping m) {
     switch (option->action->mode) {
     case replace:
 	free(input);
-	return nstrdup(option->action->out);
+	return strdup(option->action->out);
     case subst:{		/* here we need to do regex substitution. Ooh, tricky! */
 	    char *r =
 		regex_subst(input, option->action->key,

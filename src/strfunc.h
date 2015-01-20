@@ -5,14 +5,6 @@
 #ifndef __STRFUNC_H
 #define __STRFUNC_H
 
-/* kludge to patch a gaping hole in the Ultrix libc */
-
-char *nstrdup(char *);
-
-/* allocate a new string containing the first l characters of s */
-
-char *strnnew(char *s, int l);
-
 /* concat() allocates a new string and strcat()s two strings together into it. 
  */
 

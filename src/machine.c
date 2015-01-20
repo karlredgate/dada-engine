@@ -96,7 +96,7 @@ exec_instr( pInstr s ) {
 	    return tc->contents.s;
 	case int_t:
 	    sprintf(buffer, "%i", tc->contents.i);
-	    return nstrdup(buffer);
+	    return strdup(buffer);
 	}
     case PUSHV:
 	{
@@ -112,7 +112,7 @@ exec_instr( pInstr s ) {
                     fprintf(stderr, "exec_inst/PUSHV: warning - unhandled case mu\n" );
                     break;
 		case string_t:
-		    push_str(nstrdup(v->value.s));
+		    push_str(strdup(v->value.s));
 		    break;
 		case int_t:
 		    push_int(v->value.i);
@@ -140,7 +140,7 @@ exec_instr( pInstr s ) {
             fprintf(stderr, "exec_inst/PUSH: warning - unhandled case mu\n" );
             break;
 	case string_t:
-	    push_str(nstrdup(s->operand.contents.s));
+	    push_str(strdup(s->operand.contents.s));
 	    break;
 	case int_t:
 	    push_int(s->operand.contents.i);

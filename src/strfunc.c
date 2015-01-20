@@ -11,25 +11,6 @@
 #define min(x,y) (((x)<(y))?(x):(y))
 #endif
 
-/* allocate a new string containing the first l characters of s */
-char *
-strnnew(char *s, int l) {
-    int actl;			/* actual length */
-    char *result;
-    if (!s)
-	return NULL;
-    actl = min(strlen(s), l);
-    result = (char *) malloc(actl + 1);
-    strncpy(result, s, actl);
-    result[actl] = 0;
-    return result;
-}
-
-char *
-nstrdup(char *s) {
-    return strnnew(s, strlen(s));
-}
-
 /* concat() allocates a new string and strcat()s two strings together into it.  */
 char *
 concat(char *foo, char *bar) {
@@ -38,9 +19,9 @@ concat(char *foo, char *bar) {
     if (!foo && !bar)
 	return NULL;
     if (!foo)
-	return strnnew(bar, strlen(bar));
+	return strndup(bar, strlen(bar));
     if (!bar)
-	return strnnew(foo, strlen(foo));
+	return strndup(foo, strlen(foo));
     r = (char *) malloc(strlen(foo) + strlen(bar) + 1);
 
     if (r) {

@@ -6,6 +6,7 @@
  */
 
 #include <ctype.h>
+#include <string.h>
 #include "rtn.h"
 #include "strfunc.h"
 #include "map.h"
@@ -42,18 +43,18 @@ ident           [A-Za-z_][A-Za-z0-9_\-]*
 <COMMENT>"*"	/* mu */
 
 {white}		/* mu */;
-{integer}      { char *s=strnnew(yytext, yyleng); 
+{integer}      { char *s=strndup(yytext, yyleng); 
                   yylval.i = atoi(s);
                   free(s);
                   return(T_INTEGER); 
                 }
-{real}          { char *s=strnnew(yytext, yyleng); 
+{real}          { char *s=strndup(yytext, yyleng); 
                   yylval.f = atof(s);
                   free(s);
                   return(T_NUM); 
                 }
 \"[^\"]*(\\.[^\"]*)*\" { /* return a literal */
-                  yylval.s = strnnew(yytext+1, yyleng-2);
+                  yylval.s = strndup(yytext+1, yyleng-2);
                   cookstr(yylval.s);
                   return T_LITERAL;
                 };
@@ -71,7 +72,7 @@ ident           [A-Za-z_][A-Za-z0-9_\-]*
 "%pick"		{ return T_PICK; /* enumeration directive */ };
 "%resource"	{ return T_RESOURCE; /* prepended to non-startable rule */ };
 {ident}		{ /* return the identifier */
-                  yylval.s = strnnew(yytext, yyleng);
+                  yylval.s = strndup(yytext, yyleng);
                   return(T_IDENT); }
 "->"		{ return('M'); /* for "Mapping" */ }
 "<->"		{ return('R'); /* for "Reversible mapping" */ }
