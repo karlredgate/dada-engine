@@ -86,6 +86,18 @@ resolve_deref( pNode atom, pRule rules, pListNode formal, pListNode cooked )
     return _resolve_rule( rules, rule, NULL, formal, cooked, atom->mode );
 }
 
+static char *
+resolve_var_conddef( pNode atom, pRule rules, pListNode formal, pListNode cooked )
+{
+    char *val = var_fetch(atom->data);
+    if (!val) {
+        val = resolve_atom(atom->params, rules, formal, cooked);
+        var_put(atom->data, val);
+    }
+    val = strdup(val);        /* make a disposable copy of it */
+    return val;
+}
+
 /* resolve an atom */
 static inline char *
 resolve_atom(pNode atom, pRule rules, pListNode formal, pListNode cooked) {
@@ -101,15 +113,7 @@ resolve_atom(pNode atom, pRule rules, pListNode formal, pListNode cooked) {
     case symbol:  return resolve_symbol( atom, rules, formal, cooked );
     case mapping: return resolve_mapping( atom, rules, formal, cooked );
     case deref:   return resolve_deref( atom, rules, formal, cooked );
-    case var_conddef: {
-            char *val = var_fetch(atom->data);
-            if (!val) {
-                val = resolve_atom(atom->params, rules, formal, cooked);
-                var_put(atom->data, val);
-            }
-            val = strdup(val);        /* make a disposable copy of it */
-            return val;
-    }
+    case var_conddef: return resolve_var_conddef( atom, rules, formal, cooked );
     case var_def: {
             char *val = resolve_atom(atom->params, rules, formal, cooked);
             if (!val)
