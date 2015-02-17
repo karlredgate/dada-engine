@@ -5,7 +5,8 @@
 
 
 
-prefix	= /usr/local
+# prefix	= /usr/local
+prefix	= $(HOME)
 exec_prefix	= ${prefix}
 bindir	= ${exec_prefix}/bin
 datadir	= ${prefix}/lib
@@ -33,8 +34,11 @@ install:	$(INSTALL_DIRS) \
 
 ${bindir}/pb:	src/pb
 	$(INSTALL) -s src/pb ${bindir}
+
 ${bindir}/dada:	dada
-	$(INSTALL) dada ${bindir}
+	sed -e '/PREFIX=/cPREFIX=$(prefix)' dada > ${bindir}/dada
+	chmod 755 ${bindir}/dada
+
 ${infodir}/dada.info:	doc/dada.info
 	$(INSTALL) -m 0644 doc/dada.info ${infodir}
 

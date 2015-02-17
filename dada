@@ -3,8 +3,9 @@
 # Author:    acb
 # Commenced: 14-7-1995
 
-PBDIR="/usr/local/bin"
-DADAROOT="/usr/local/lib/dada"
+PREFIX=/usr/local
+PBDIR="$PREFIX/bin"
+DADAROOT="$PREFIX/lib/dada"
 CPP="/lib/cpp"
 [ -f $CPP ] || CPP=/usr/bin/cpp
 
