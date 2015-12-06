@@ -68,6 +68,7 @@ EIP-property-clause:
     quote "Properties" quote white-space
     ":" white-space
     "{" new-line
+        // "InstanceId" : { "Ref" : "my-instance-name" }
     "}" new-line
 ;
 
