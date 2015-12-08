@@ -3,7 +3,7 @@
 ".*": 0 u ;
 ;
 
-bullshit : title "\n====\n" paragraph ;
+bullshit : title "\n====\n" paragraph "\n\n" paragraph ;
 
 title: explaining ;
 
