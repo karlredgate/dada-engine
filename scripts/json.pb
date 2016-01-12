@@ -1,23 +1,23 @@
 
 #include "base.pb"
 
-# JSONText : JSONValue ;
-JSONText : JSONObject ;
+JSONText : JSONValue ;
 
-JSONValue : JSONNullLiteral |
-            JSONBooleanLiteral |
+JSONValue :
             JSONObject |
+            JSONNullLiteral |
+            JSONBooleanLiteral |
             JSONArray |
             JSONString |
             JSONNumber ;
 
-# JSONObject : "{" "}" | "{" JSONMemberList "}" ;
-JSONObject : "{" nl
-             JSONMemberList nl
-             "}" ;
-JSONMember : JSONString ":" JSONValue ;
+JSONObject : "{" JSONObjectMembers "}" ;
+JSONObjectMembers : JSONMemberList | "" ;
 JSONMemberList : JSONMember | JSONMemberList "," JSONMember ;
-JSONArray : "[" "]" | "[" JSONElementList "]" ;
+JSONMember : JSONString ":" JSONValue ;
+
+JSONArray : "[" JSONArrayMembers "]" ;
+JSONArrayMembers : JSONElementList | "" ;
 JSONElementList : JSONValue | JSONElementList "," JSONValue ;
 
 JSONString : StringLiteral ;
