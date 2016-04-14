@@ -1,0 +1,27 @@
+
+JSONText           : JSONValue ;
+JSONString         : STRING ;
+JSONNullLiteral    : NULL ;
+JSONNumber         : NUMBER;
+JSONBooleanLiteral : TRUE | FALSE ;
+
+JSONValue : JSONNullLiteral
+          | JSONBooleanLiteral
+          | JSONString
+          | JSONNumber
+          | JSONObject
+          | JSONArray ;
+
+JSONObject      : '{' '}'
+                | '{' JSONMemberList '}' ;
+
+JSONMember      : JSONString ':' JSONValue ;
+
+JSONMemberList  : JSONMember
+                | JSONMemberList ',' JSONMember ;
+
+JSONArray       : '[' ']'
+                | '[' JSONElementList ']' ;
+
+JSONElementList : JSONValue
+                | JSONElementList ',' JSONValue ;
