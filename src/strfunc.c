@@ -66,6 +66,9 @@ cookstr(char *str) {
 		case 'a':
 		    *(to++) = '\a';
 		    break;
+		case 's':
+		    *(to++) = '\\';
+		    break;
 		default:
 		    *(to++) = *(from);
 		}
