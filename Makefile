@@ -25,7 +25,6 @@ all:	dada
 	
 	$(MAKE) -C src
 	$(MAKE) -C doc
-	exit 1
 
 install:	$(INSTALL_DIRS) \
 	$(bindir)/pb ${bindir}/dada ${infodir}/dada.info
