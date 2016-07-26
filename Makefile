@@ -36,7 +36,8 @@ ${bindir}/pb:	src/pb
 	$(INSTALL) -s src/pb ${bindir}
 
 ${bindir}/dada:	dada
-	sed -e '/PREFIX=/cPREFIX=$(prefix)' dada > ${bindir}/dada
+	sed -e '/^PREFIX=/s|=.*|=$(prefix)|' dada > dada-install
+	mv dada-install ${bindir}/dada
 	chmod 755 ${bindir}/dada
 
 ${infodir}/dada.info:	doc/dada.info
