@@ -139,7 +139,7 @@ resolve_atom(pNode atom, pRule rules, pListNode formal, pListNode cooked) {
     case plus:
         result = resolve_atom(atom->params, rules, formal, cooked);
     case star: {
-        while ((rand() % 5) > 1)
+        while ((random() % 5) > 1)
             result = dstrcat(result,
                              resolve_atom(atom->params, rules, formal,
                                           cooked));
