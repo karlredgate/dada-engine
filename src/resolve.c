@@ -14,6 +14,8 @@
 #include "variables.h"
 #include "machine.h"
 
+#include "ranq1.h"
+
 #ifndef __GNUC__
 #define inline                        /* no inline functions available */
 #endif
@@ -139,7 +141,7 @@ resolve_atom(pNode atom, pRule rules, pListNode formal, pListNode cooked) {
     case plus:
         result = resolve_atom(atom->params, rules, formal, cooked);
     case star: {
-        while ((random() % 5) > 1)
+        while ((ranq1() % 5) > 1)
             result = dstrcat(result,
                              resolve_atom(atom->params, rules, formal,
                                           cooked));
@@ -172,7 +174,7 @@ resolve_atom(pNode atom, pRule rules, pListNode formal, pListNode cooked) {
             if (trace)
                 printf("last choice: %i\n", atom->last_choice);
             do {
-                choice = random() % num_options;
+                choice = ranq1() % num_options;
             } while ((choice == atom->last_choice) && (num_options > 1));
             if (trace)
                 printf("inline choice: choose %i/%i\n", choice,
@@ -287,7 +289,7 @@ select_option(pOption options, int *last, enum resmode mode) {
         int choice;
         /* do it the old way */
         do {
-            choice = random() % num_options;
+            choice = ranq1() % num_options;
         } while ((choice == *last) && (num_options > 1));
         *last = choice;
         return option_nth(options, choice);
@@ -300,7 +302,7 @@ select_option(pOption options, int *last, enum resmode mode) {
                    (void *) &sum);
         if (trace)
             fprintf(stderr, "total of option weights: %i\n", sum);
-        ch = sum ? random() % sum : 0;
+        ch = sum ? ranq1() % sum : 0;
         if (trace)
             fprintf(stderr, "random value: %i\n", ch);
         while (ch > o->randweight) {

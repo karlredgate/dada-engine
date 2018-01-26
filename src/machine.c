@@ -12,6 +12,8 @@
 #include "rtn.h"
 #include "resolve.h"
 
+#include "ranq1.h"
+
 #ifndef min
 #define min(a,b) (((a)<(b))?(a):(b))
 #endif
@@ -196,7 +198,7 @@ exec_instr( pInstr s ) {
 	tc2 = temp_pop();
 	tc = temp_pop();
 	if ((tc->type == int_t) && (tc2->type == int_t)) {
-	    push_int((random() % (tc2->contents.i - tc->contents.i + 1))
+	    push_int((ranq1() % (tc2->contents.i - tc->contents.i + 1))
 		     + tc->contents.i);
 	}
 	break;

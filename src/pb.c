@@ -16,6 +16,8 @@
 #include "dump.h"
 #include "dada_util.h"
 
+#include "ranq1.h"
+
 extern int yyparse(void);
 
 static char *start_symbol = NULL;	/* to override the default start symbol */
@@ -66,9 +68,9 @@ use_rtn( pRule rtn ) {
     }
 }
 
-long
+uint64_t
 strtoseed( char *s ) {
-    long r = strtol(s, NULL, 10);
+    uint64_t r = strtoull(s, NULL, 10);
 
     if ( r != 0 ) return r;
 
@@ -80,14 +82,8 @@ strtoseed( char *s ) {
 
 static int
 pick_seed( char *arg ) {
-    if ( arg != NULL ) return strtoseed(arg);
-
-    /* if /dev/random exists use that */
-
-    struct timeval tv;
-    gettimeofday(&tv, NULL);
-
-    return tv.tv_usec;
+    if ( arg == NULL ) return 0;
+    return strtoseed(arg);
 }
 
 int
@@ -141,7 +137,7 @@ main( int argc, char **argv ) {
 	}
     }
 
-    srandom( pick_seed(rseed) );
+    seed_ranq1( pick_seed(rseed) );
     yyparse();
 
     return 0;
