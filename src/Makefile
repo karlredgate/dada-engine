@@ -8,7 +8,7 @@ RANLIB	= ranlib
 
 # the pb language library
 LIBPB_OBJS = check.o dict.o dstring.o dump.o error.o machine.o map.o ptrlist.o \
-	resolve.o rtn.o strfunc.o transform.o variables.o
+	resolve.o rtn.o strfunc.o transform.o variables.o ranq1.o
 
 PB_OBJS	= pb.o y.tab.o lex.yy.o wrap.o
 #PBC_OBJS =  pbc.o y.tab.o lex.yy.o rtn.o strfunc.o dstring.o check.o map.o \
