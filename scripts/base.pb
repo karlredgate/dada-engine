@@ -1,5 +1,7 @@
+%resource  Boolean: "true" | "false" ;
 %resource  Integer: non-zero digit* ;
-%resource  StringLiteral: "\"" ascii+ "\"" ;
+%resource  Number : Integer ;
+%resource  StringLiteral: "\"" ascii+ ascii* ascii* "\"" ;
 %resource  BoundedInteger:
            non-zero  |
            non-zero digit |

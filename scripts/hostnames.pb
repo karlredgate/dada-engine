@@ -37,5 +37,3 @@
 %resource  hostname:
     developer well-known-domain |
     www well-known-domain | well-known-domain ;
-
-test: hostname ;
